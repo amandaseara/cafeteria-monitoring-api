@@ -1,0 +1,38 @@
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cafeteria-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cafeteria-api
+  template:
+    metadata:
+      labels:
+        app: cafeteria-api
+    spec:
+      containers:
+        - name: cafeteria-api
+          image: cafeteria-api:1.0
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 8081
+          env:
+            - name: SPRING_PROFILES_ACTIVE
+              value: "demo"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: cafeteria-api
+spec:
+  type: NodePort
+  selector:
+    app: cafeteria-api
+  ports:
+    - name: http
+      port: 8081
+      targetPort: 8081
+      nodePort: 30081

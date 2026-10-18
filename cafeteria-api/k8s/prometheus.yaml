@@ -1,0 +1,78 @@
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cafeteria-prometheus-config
+data:
+  prometheus.yml: |
+    global:
+      scrape_interval: 5s
+      evaluation_interval: 5s
+
+    rule_files:
+      - /etc/prometheus/alerts.yml
+
+    scrape_configs:
+      - job_name: cafeteria-api
+        metrics_path: /actuator/prometheus
+        static_configs:
+          - targets:
+              - cafeteria-api:8081
+
+      - job_name: prometheus
+        static_configs:
+          - targets:
+              - localhost:9090
+  alerts.yml: |
+    groups:
+      - name: cafeteria-product-alerts
+        rules:
+          - alert: HighProductOrderRate
+            expr: sum by (product_id, product_name) (increase(cafeteria_product_orders_total[5m])) > 5
+            for: 0m
+            labels:
+              severity: warning
+            annotations:
+              summary: "Demasiados pedidos de un producto"
+              description: "El producto {{ $labels.product_name }} (ID {{ $labels.product_id }}) superó 5 pedidos en los últimos 5 minutos."
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cafeteria-prometheus
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cafeteria-prometheus
+  template:
+    metadata:
+      labels:
+        app: cafeteria-prometheus
+    spec:
+      containers:
+        - name: prometheus
+          image: prom/prometheus:latest
+          args:
+            - --config.file=/etc/prometheus/prometheus.yml
+          ports:
+            - containerPort: 9090
+          volumeMounts:
+            - name: prometheus-config
+              mountPath: /etc/prometheus
+      volumes:
+        - name: prometheus-config
+          configMap:
+            name: cafeteria-prometheus-config
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: cafeteria-prometheus
+spec:
+  selector:
+    app: cafeteria-prometheus
+  ports:
+    - port: 9090
+      targetPort: 9090
+  type: ClusterIP

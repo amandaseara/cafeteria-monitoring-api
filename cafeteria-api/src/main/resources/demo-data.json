@@ -1,0 +1,53 @@
+{
+  "products": [
+    {
+      "name": "Cafe",
+      "description": "Cafe espresso",
+      "price": 120.00
+    },
+    {
+      "name": "Croissant",
+      "description": "Croissant simple",
+      "price": 95.00
+    },
+    {
+      "name": "Te",
+      "description": "Te negro",
+      "price": 85.00
+    }
+  ],
+  "orders": [
+    {
+      "product": "Cafe",
+      "quantity": 2
+    },
+    {
+      "product": "Cafe",
+      "quantity": 1
+    },
+    {
+      "product": "Croissant",
+      "quantity": 1
+    },
+    {
+      "product": "Cafe",
+      "quantity": 3
+    },
+    {
+      "product": "Cafe",
+      "quantity": 1
+    },
+    {
+      "product": "Te",
+      "quantity": 2
+    },
+    {
+      "product": "Cafe",
+      "quantity": 2
+    },
+    {
+      "product": "Cafe",
+      "quantity": 1
+    }
+  ]
+}

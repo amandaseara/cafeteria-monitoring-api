@@ -1,0 +1,11 @@
+groups:
+  - name: cafeteria-product-alerts
+    rules:
+      - alert: HighProductOrderRate
+        expr: sum by (product_id, product_name) (increase(cafeteria_product_orders_total[5m])) > 5
+        for: 0m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Demasiados pedidos de un producto"
+          description: "El producto {{ $labels.product_name }} (ID {{ $labels.product_id }}) superó 5 órdenes en los últimos 5 minutos."
