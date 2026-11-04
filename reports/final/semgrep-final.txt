@@ -1,0 +1,36 @@
+﻿docker :                
+En línea: 1 Carácter: 1
++ docker run --rm `
++ ~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (               :Stri 
+   ng) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+               
+ÔöîÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÉ
+Ôöé Scan Status Ôöé
+ÔööÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÿ
+  Scanning 49 files tracked by git with 60 Code rules:
+  Scanning 14 files with 60 java rules.
+                
+                
+ÔöîÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÉ
+Ôöé Scan Summary Ôöé
+ÔööÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÿ
+Ô£à Scan completed successfully.
+ ÔÇó Findings: 0 (0 blocking)
+ ÔÇó Rules run: 60
+ ÔÇó Targets scanned: 14
+ ÔÇó Parsed lines: ~100.0%
+ ÔÇó Scan skipped: 
+   Ôùª Files larger than  files 1.0 MB: 1
+   Ôùª Files matching .semgrepignore patterns: 1
+ ÔÇó For a detailed list of skipped files and lines, run semgrep 
+with the --verbose flag
+Ran 60 rules on 14 files: 0 findings.
+(need more rules? `semgrep login` for additional free Semgrep 
+Registry rules)
+
+If Semgrep missed a finding, please send us feedback to let us 
+know!
+See https://semgrep.dev/docs/reporting-false-negatives/
