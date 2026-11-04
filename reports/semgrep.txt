@@ -1,0 +1,38 @@
+﻿semgrep.exe :                
+En línea: 1 Carácter: 1
++ & "$semgrepPath\semgrep.exe" scan --config p/java --text . 2>&1 
+|
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (               :Stri 
+   ng) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+               
+ÔöîÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÉ
+Ôöé Scan Status Ôöé
+ÔööÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÿ
+  Scanning 29 files tracked by git with 60 Code rules:
+  Scanning 14 files with 60 java rules.
+                
+                
+ÔöîÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÉ
+Ôöé Scan Summary Ôöé
+ÔööÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÇÔöÿ
+Ô£à Scan completed successfully.
+ ÔÇó Findings: 0 (0 blocking)
+ ÔÇó Rules run: 60
+ ÔÇó Targets scanned: 14
+ ÔÇó Parsed lines: ~100.0%
+ ÔÇó Scan skipped: 
+   Ôùª Files matching .semgrepignore patterns: 1
+ ÔÇó Scan was limited to files tracked by git
+ ÔÇó For a detailed list of skipped files and lines, run semgrep 
+with the --verbose flag
+Ran 60 rules on 14 files: 0 findings.
+(need more rules? `semgrep login` for additional free Semgrep 
+Registry rules)
+
+If Semgrep missed a finding, please send us feedback to let us 
+know!
+See https://semgrep.dev/docs/reporting-false-negatives/
+
