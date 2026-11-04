@@ -1,3 +1,4 @@
+
 apiVersion: kyverno.io/v1
 kind: ClusterPolicy
 metadata:
@@ -12,6 +13,13 @@ spec:
           - resources:
               kinds:
                 - Pod
+
+      exclude:
+        any:
+          - resources:
+              namespaces:
+                - falco
+
       validate:
         message: "Los contenedores deben ejecutarse como usuarios no root."
         anyPattern:
@@ -19,8 +27,9 @@ spec:
               securityContext:
                 runAsNonRoot: true
               containers:
-                - =(securityContext):
-                    =(runAsNonRoot): true
+                - "=(securityContext)":
+                    "=(runAsNonRoot)": true
+
           - spec:
               containers:
                 - securityContext:
