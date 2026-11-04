@@ -11,6 +11,6 @@ Error:
 ENOLOCK - This command requires an existing lockfile.
 
 Justification:
-La aplicación utiliza Maven para la gestión de dependencias.
+La aplicacion utiliza Maven para la gestion de dependencias.
 Las dependencias de Java se auditan por separado usando OWASP Dependency-Check.
 

@@ -13,15 +13,38 @@ spec:
       labels:
         app: cafeteria-api
     spec:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 10001
+
       containers:
         - name: cafeteria-api
           image: cafeteria-api:1.0
           imagePullPolicy: Never
+
           ports:
             - containerPort: 8081
+
           env:
             - name: SPRING_PROFILES_ACTIVE
               value: "demo"
+
+          securityContext:
+            runAsNonRoot: true
+            runAsUser: 10001
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "256Mi"
+            limits:
+              cpu: "500m"
+              memory: "512Mi"
+
 ---
 apiVersion: v1
 kind: Service
