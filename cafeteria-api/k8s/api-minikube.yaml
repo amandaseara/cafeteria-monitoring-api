@@ -16,10 +16,13 @@ spec:
       securityContext:
         runAsNonRoot: true
         runAsUser: 10001
+        runAsGroup: 10001
+        seccompProfile:
+          type: RuntimeDefault
 
       containers:
         - name: cafeteria-api
-          image: cafeteria-api:1.0
+          image: cafeteria-api:1.1
           imagePullPolicy: Never
 
           ports:
@@ -32,7 +35,9 @@ spec:
           securityContext:
             runAsNonRoot: true
             runAsUser: 10001
+            runAsGroup: 10001
             allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
             capabilities:
               drop:
                 - ALL
@@ -44,6 +49,14 @@ spec:
             limits:
               cpu: "500m"
               memory: "512Mi"
+
+          volumeMounts:
+            - name: tmp
+              mountPath: /tmp
+
+      volumes:
+        - name: tmp
+          emptyDir: {}
 
 ---
 apiVersion: v1

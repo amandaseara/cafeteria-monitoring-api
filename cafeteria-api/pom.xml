@@ -1,3 +1,4 @@
+
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -20,7 +21,25 @@
 
     <properties>
         <java.version>21</java.version>
+        <tomcat.version>11.0.25</tomcat.version>
     </properties>
+
+    <!-- Override vulnerable Jackson versions -->
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>tools.jackson.core</groupId>
+                <artifactId>jackson-core</artifactId>
+                <version>3.1.7</version>
+            </dependency>
+
+            <dependency>
+                <groupId>tools.jackson.core</groupId>
+                <artifactId>jackson-databind</artifactId>
+                <version>3.1.7</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
     <dependencies>
 
@@ -62,7 +81,7 @@
             <scope>runtime</scope>
         </dependency>
 
-        <!-- Base de datos Driver PostgreSQL -->
+        <!-- Base de datos PostgreSQL -->
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>

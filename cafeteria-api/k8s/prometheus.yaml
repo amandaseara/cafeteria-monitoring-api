@@ -23,6 +23,7 @@ data:
         static_configs:
           - targets:
               - localhost:9090
+
   alerts.yml: |
     groups:
       - name: cafeteria-product-alerts
@@ -35,6 +36,7 @@ data:
             annotations:
               summary: "Demasiados pedidos de un producto"
               description: "El producto {{ $labels.product_name }} (ID {{ $labels.product_id }}) superó 5 pedidos en los últimos 5 minutos."
+
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -50,20 +52,64 @@ spec:
       labels:
         app: cafeteria-prometheus
     spec:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 65534
+        runAsGroup: 65534
+        seccompProfile:
+          type: RuntimeDefault
+
       containers:
         - name: prometheus
-          image: prom/prometheus:latest
+          image: prom/prometheus:v3.15.1
+
           args:
             - --config.file=/etc/prometheus/prometheus.yml
+            - --storage.tsdb.path=/prometheus
+
           ports:
             - containerPort: 9090
+
+          securityContext:
+            runAsNonRoot: true
+            runAsUser: 65534
+            runAsGroup: 65534
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop:
+                - ALL
+
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "256Mi"
+            limits:
+              cpu: "500m"
+              memory: "512Mi"
+
           volumeMounts:
             - name: prometheus-config
               mountPath: /etc/prometheus
+              readOnly: true
+
+            - name: prometheus-data
+              mountPath: /prometheus
+
+            - name: tmp
+              mountPath: /tmp
+
       volumes:
         - name: prometheus-config
           configMap:
             name: cafeteria-prometheus-config
+
+        - name: prometheus-data
+          emptyDir: {}
+
+        - name: tmp
+          emptyDir: {}
+
 ---
 apiVersion: v1
 kind: Service

@@ -13,16 +13,70 @@ spec:
       labels:
         app: cafeteria-grafana
     spec:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 472
+        runAsGroup: 472
+        seccompProfile:
+          type: RuntimeDefault
+
       containers:
         - name: grafana
-          image: grafana/grafana:latest
+          image: grafana/grafana:13.3.0
           ports:
             - containerPort: 3000
+
           env:
             - name: GF_SECURITY_ADMIN_USER
-              value: admin
+              valueFrom:
+                secretKeyRef:
+                  name: grafana-admin
+                  key: admin-user
+
             - name: GF_SECURITY_ADMIN_PASSWORD
-              value: cafeteria123
+              valueFrom:
+                secretKeyRef:
+                  name: grafana-admin
+                  key: admin-password
+
+          securityContext:
+            runAsNonRoot: true
+            runAsUser: 472
+            runAsGroup: 472
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop:
+                - ALL
+
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "128Mi"
+            limits:
+              cpu: "500m"
+              memory: "512Mi"
+
+          volumeMounts:
+            - name: grafana-data
+              mountPath: /var/lib/grafana
+
+            - name: grafana-logs
+              mountPath: /var/log/grafana
+
+            - name: tmp
+              mountPath: /tmp
+
+      volumes:
+        - name: grafana-data
+          emptyDir: {}
+
+        - name: grafana-logs
+          emptyDir: {}
+
+        - name: tmp
+          emptyDir: {}
+
 ---
 apiVersion: v1
 kind: Service
